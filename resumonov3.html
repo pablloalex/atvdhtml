@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo — Capítulo 3: CSS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #c8c4bb;
+      --accent: #1a1a1a;
+      --code-bg: #e8e5df;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    header {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 0.9rem; }
+
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82em;
+      background: var(--code-bg);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+
+    pre {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      background: var(--code-bg);
+      border-left: 3px solid var(--text);
+      padding: 1rem 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.4rem;
+      line-height: 1.55;
+    }
+
+    ul, ol {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    li { margin-bottom: 0.35rem; }
+
+    .note {
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      margin: 1.4rem 0;
+      font-size: 0.92rem;
+    }
+
+    .note .label { margin-bottom: 0.3rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1.2rem 0 1.8rem;
+    }
+
+    th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: left;
+      border-bottom: 2px solid var(--text);
+      padding: 0.5rem 0.6rem;
+    }
+
+    td {
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0.6rem;
+      vertical-align: top;
+    }
+
+    td code { font-size: 0.78em; }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="label">Resumo · Capítulo 3</span>
+    <h1>Designing Web Pages with CSS</h1>
+  </header>
+
+  <!-- 1. Introdução -->
+  <h2>1. O que é CSS</h2>
+  <p>CSS (Cascading Style Sheets) é a linguagem de estilo que controla a aparência visual dos elementos HTML no navegador — fontes, cores, espaçamentos, bordas e layout. Sem CSS, páginas ficam com aparência padrão e sem atratividade.</p>
+
+  <h3>Estrutura de uma regra CSS</h3>
+  <p>Uma regra CSS é composta por <strong>seletor</strong> e <strong>declaração</strong>. A declaração contém uma ou mais duplas de <em>propriedade: valor</em>.</p>
+  <pre>h1 {
+  font-family: Arial;
+  color: darkblue;
+}</pre>
+
+  <!-- 2. Formas de incluir CSS -->
+  <h2>2. Formas de incluir CSS no HTML</h2>
+
+  <h3>CSS externo (recomendado)</h3>
+  <p>O código CSS fica em um arquivo separado (<code>.css</code>) e é referenciado no HTML com a tag <code>&lt;link&gt;</code>. Permite reutilização em vários documentos e manutenção centralizada.</p>
+  <pre>&lt;link href="css/styles.css" type="text/css" rel="stylesheet" /&gt;</pre>
+
+  <h3>CSS interno</h3>
+  <p>As regras ficam dentro do elemento <code>&lt;style&gt;</code> no <code>&lt;head&gt;</code> do HTML. Útil para páginas únicas, mas impede reuso.</p>
+
+  <h3>CSS inline</h3>
+  <p>Estilos são aplicados diretamente no atributo <code>style</code> de cada elemento. Deve ser evitado, pois elimina a reusabilidade.</p>
+
+  <h3>@import</h3>
+  <p>Permite importar arquivos CSS adicionais dentro de um arquivo CSS já existente, criando um sistema modular de estilos.</p>
+
+  <!-- 3. Seletores -->
+  <h2>3. Seletores</h2>
+  <p>Seletores determinam quais elementos HTML uma regra CSS afeta.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Seletor</th>
+        <th>Exemplo</th>
+        <th>O que seleciona</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tipo</td>
+        <td><code>h1 { }</code></td>
+        <td>Todos os elementos <code>&lt;h1&gt;</code></td>
+      </tr>
+      <tr>
+        <td>Classe</td>
+        <td><code>.intro { }</code></td>
+        <td>Elementos com <code>class="intro"</code></td>
+      </tr>
+      <tr>
+        <td>ID</td>
+        <td><code>#topo { }</code></td>
+        <td>Elemento com <code>id="topo"</code></td>
+      </tr>
+      <tr>
+        <td>Universal</td>
+        <td><code>* { }</code></td>
+        <td>Todos os elementos</td>
+      </tr>
+      <tr>
+        <td>Atributo</td>
+        <td><code>[type="text"] { }</code></td>
+        <td>Elementos com atributo específico</td>
+      </tr>
+      <tr>
+        <td>Filho direto</td>
+        <td><code>body > ul { }</code></td>
+        <td>Filhos diretos de <code>&lt;body&gt;</code></td>
+      </tr>
+      <tr>
+        <td>Descendente</td>
+        <td><code>body ul { }</code></td>
+        <td>Qualquer <code>&lt;ul&gt;</code> dentro de <code>&lt;body&gt;</code></td>
+      </tr>
+      <tr>
+        <td>Irmão adjacente</td>
+        <td><code>h1 + p { }</code></td>
+        <td><code>&lt;p&gt;</code> imediatamente após <code>&lt;h1&gt;</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Cascata e Especificidade -->
+  <h2>4. Cascata e Especificidade</h2>
+  <p>Quando múltiplas regras se aplicam ao mesmo elemento, o CSS define qual prevalece:</p>
+  <ul>
+    <li><strong>Mesmo seletor:</strong> a última regra declarada vence.</li>
+    <li><strong>Seletores diferentes:</strong> o mais específico vence.</li>
+  </ul>
+  <p>A especificidade é calculada com três contadores <strong>A·B·C</strong>:</p>
+  <ul>
+    <li><strong>A</strong> — incrementa para cada seletor de ID</li>
+    <li><strong>B</strong> — incrementa para classes, atributos e pseudo-classes</li>
+    <li><strong>C</strong> — incrementa para seletores de tipo e pseudo-elementos</li>
+  </ul>
+  <pre>* {}           /* 0·0·0 */
+h1 {}          /* 0·0·1 */
+.valid {}      /* 0·1·0 */
+#header {}     /* 1·0·0 */</pre>
+
+  <div class="note">
+    <span class="label">Pseudo-classes e Pseudo-elementos</span>
+    <p>Pseudo-classes (<code>:hover</code>, <code>:focus</code>, <code>:nth-child()</code>) selecionam elementos em estados específicos. Pseudo-elementos (<code>::before</code>, <code>::after</code>, <code>::first-letter</code>) endereçam partes específicas de um elemento.</p>
+  </div>
+
+  <!-- 5. Herança -->
+  <h2>5. Herança</h2>
+  <p>Propriedades como <code>color</code> e <code>font-family</code> são herdadas pelos elementos filhos automaticamente. Outras, como <code>border</code>, não são — o que evita que bordas de um pai se repliquem em todos os descendentes.</p>
+
+  <!-- 6. Cores e Texto -->
+  <h2>6. Cores e Formatação de Texto</h2>
+
+  <h3>Formas de definir cores</h3>
+  <ul>
+    <li><code>rgb(255, 255, 0)</code> — valores RGB</li>
+    <li><code>#FFFF00</code> — hexadecimal</li>
+    <li><code>yellow</code> — nome de cor (140+ disponíveis)</li>
+    <li><code>rgba(255, 255, 0, 0.5)</code> — RGB com opacidade</li>
+    <li><code>hsl(60, 100%, 50%)</code> — matiz, saturação e luminosidade</li>
+  </ul>
+
+  <h3>Propriedades de texto</h3>
+  <table>
+    <thead>
+      <tr><th>Propriedade</th><th>Efeito</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>font-family</code></td><td>Define a fonte (com fallbacks)</td></tr>
+      <tr><td><code>font-size</code></td><td>Tamanho: <code>px</code>, <code>%</code>, <code>em</code></td></tr>
+      <tr><td><code>font-style</code></td><td><code>italic</code> / <code>oblique</code> / <code>normal</code></td></tr>
+      <tr><td><code>font-weight</code></td><td><code>bold</code>, <code>normal</code>, 100–900</td></tr>
+      <tr><td><code>text-align</code></td><td><code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code></td></tr>
+      <tr><td><code>text-transform</code></td><td><code>uppercase</code>, <code>lowercase</code>, <code>capitalize</code></td></tr>
+      <tr><td><code>text-decoration</code></td><td><code>underline</code>, <code>line-through</code>, <code>overline</code></td></tr>
+      <tr><td><code>line-height</code></td><td>Espaçamento entre linhas</td></tr>
+      <tr><td><code>letter-spacing</code></td><td>Espaço entre letras</td></tr>
+      <tr><td><code>text-shadow</code></td><td>Sombra no texto</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Formatação de links com pseudo-classes</h3>
+  <pre>a:link    { color: blue; }
+a:visited { color: green; }
+a:hover   { background-color: orange; }
+a:active  { color: red; }
+a:focus   { color: orange; }</pre>
+
+  <!-- 7. Listas e Tabelas -->
+  <h2>7. Listas e Tabelas</h2>
+
+  <h3>Listas</h3>
+  <p>A propriedade <code>list-style-type</code> controla o marcador:</p>
+  <ul>
+    <li>Não-ordenadas: <code>disc</code>, <code>circle</code>, <code>square</code>, <code>none</code></li>
+    <li>Ordenadas: <code>decimal</code>, <code>lower-alpha</code>, <code>upper-roman</code>, etc.</li>
+  </ul>
+  <p>Também é possível usar uma imagem como marcador com <code>list-style-image: url(...)</code>, e controlar a posição com <code>list-style-position: inside | outside</code>.</p>
+
+  <h3>Tabelas</h3>
+  <p>Principais propriedades para estilizar tabelas:</p>
+  <ul>
+    <li><code>border</code> — define borda da tabela</li>
+    <li><code>border-collapse: collapse</code> — elimina bordas duplas entre células</li>
+    <li><code>padding</code> — espaçamento interno das células</li>
+    <li><code>tr:nth-child(odd/even)</code> — estilo alternado por linha</li>
+    <li><code>td:first-child</code> / <code>td:nth-child(n)</code> — estiliza colunas específicas</li>
+  </ul>
+
+  <!-- 8. Sistemas de Layout -->
+  <h2>8. Sistemas de Layout</h2>
+
+  <h3>Conceitos base</h3>
+  <p>Elementos HTML se dividem em <strong>block-level</strong> (empilhados verticalmente, como <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>) e <strong>inline-level</strong> (fluem horizontalmente, como <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>). A propriedade <code>display</code> permite alterar esse comportamento.</p>
+
+  <p>Tipos de posicionamento via <code>position</code>:</p>
+  <ul>
+    <li><code>static</code> — fluxo normal (padrão)</li>
+    <li><code>relative</code> — deslocado em relação à posição normal</li>
+    <li><code>absolute</code> — relativo ao elemento pai</li>
+    <li><code>fixed</code> — relativo à janela do navegador</li>
+    <li><code>sticky</code> — misto entre relative e fixed</li>
+  </ul>
+
+  <h3>Float Layout</h3>
+  <p>A propriedade <code>float: left | right</code> posiciona elementos à esquerda ou direita do bloco pai, com o texto fluindo ao redor. Foi amplamente usada no passado, mas hoje existem alternativas mais adequadas.</p>
+
+  <h3>Flexbox Layout</h3>
+  <p>Introduzido no CSS3, o flexbox é um layout <strong>unidimensional</strong> (linhas ou colunas) e direção-independente. O container é ativado com <code>display: flex</code>.</p>
+  <table>
+    <thead>
+      <tr><th>Propriedade</th><th>Aplica-se a</th><th>Função</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>flex-direction</code></td><td>Container</td><td>Direção dos itens (row/column)</td></tr>
+      <tr><td><code>justify-content</code></td><td>Container</td><td>Distribuição no eixo principal</td></tr>
+      <tr><td><code>align-items</code></td><td>Container</td><td>Alinhamento no eixo cruzado</td></tr>
+      <tr><td><code>flex-grow</code></td><td>Item</td><td>Quanto o item pode crescer</td></tr>
+      <tr><td><code>flex-shrink</code></td><td>Item</td><td>Quanto o item pode encolher</td></tr>
+      <tr><td><code>flex</code></td><td>Item</td><td>Shorthand para grow/shrink/basis</td></tr>
+      <tr><td><code>order</code></td><td>Item</td><td>Ordem de exibição</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Grid Layout</h3>
+  <p>O grid é um layout <strong>bidimensional</strong> (linhas e colunas simultâneas), ideal para layouts complexos. Ativado com <code>display: grid</code>.</p>
+  <pre>form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 16px;
+}</pre>
+  <p>Itens são posicionados com <code>grid-column: 1 / 2</code> e <code>grid-row</code>. Também é possível nomear áreas com <code>grid-template-areas</code>.</p>
+
+  <!-- 9. Resumo -->
+  <h2>9. Pontos-Chave</h2>
+  <ul>
+    <li>CSS controla a aparência de elementos HTML via <strong>regras</strong> (seletor + declaração).</li>
+    <li>CSS pode ser incluído de forma <strong>externa</strong> (recomendado), <strong>interna</strong> ou <strong>inline</strong>.</li>
+    <li>Seletores permitem selecionar elementos por tipo, classe, ID, atributo, hierarquia, etc.</li>
+    <li>A <strong>especificidade</strong> determina qual regra prevalece quando há conflito.</li>
+    <li>Propriedades como <code>color</code> e <code>font-family</code> são <strong>herdadas</strong> pelos filhos.</li>
+    <li>CSS oferece três sistemas de layout modernos: <strong>Float</strong>, <strong>Flexbox</strong> e <strong>Grid</strong>.</li>
+    <li>Flexbox é ideal para layouts unidimensionais; Grid é mais poderoso para layouts complexos.</li>
+  </ul>
+
+  <footer>
+    Resumo do Capítulo 3 — Designing Web Pages with CSS · Rheinwerk Publishing, 2025
+  </footer>
+
+</body>
+</html>
